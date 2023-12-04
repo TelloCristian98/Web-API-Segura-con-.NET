@@ -4,8 +4,6 @@ El proyecto está estructurado con el patrón de diseño MVC y con el SDK de .NE
 
 La distribución de las carpetas del proyecto es de la siguiente manera:
 
-  
-
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/74cfe730-9846-4dd4-bc76-4f8781f5f564/17f5358f-d702-418a-ab28-06e58d076865/Untitled.png)
 
 La base de datos tiene las siguientes tablas:
