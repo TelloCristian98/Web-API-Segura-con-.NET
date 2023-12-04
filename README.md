@@ -1,14 +1,22 @@
 # Configuración del Proyecto:
 
-El proyecto está estructurado con el patrón de diseño MVC y con el SDK de .NET versión 7. El proyecto consiste en realizar operaciones CRUD, a través de operaciones REST con una API, a una base de datos de productos.
+El proyecto está estructurado con el patrón de diseño MVC y con el SDK de .NET versión 7.
+
+Para ejecutar el proyecto de manera local se debe importar la base de datos de la carpeta "Data Base" y conectarla con el proyecto a través del [appsettings.json](./WebAPI/appsettings.json). Una vez conectada la base de datos se puede ejecutar el proyecto desde la terminal con el siguiente comando:
+
+`dotnet run`
+
+O también se puede abrir el proyecto desde Visual Studio 2022 y ejecutar el mismo.
+
+El proyecto consiste en realizar operaciones CRUD, a través de operaciones REST con una API, a una base de datos de productos.
 
 La distribución de las carpetas del proyecto es de la siguiente manera:
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/74cfe730-9846-4dd4-bc76-4f8781f5f564/17f5358f-d702-418a-ab28-06e58d076865/Untitled.png)
+![Untitled](./img/1.png)
 
 La base de datos tiene las siguientes tablas:
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/74cfe730-9846-4dd4-bc76-4f8781f5f564/13852eaf-01c1-42d2-a511-4fd54cdf4ee9/Untitled.png)
+![Untitled](./img/2.png)
 
 Esta parte del proyecto esta desarrollada a partir de los Modelos Categoría y Producto, que se encuentra en la carpeta “Models” y son clases con los atributos y métodos necesarios para la correcta estructura de los mismos.
 
@@ -17,12 +25,14 @@ Para las operaciones CRUD se realizan los métodos REST necesarios en la clase �
 ■ GET(/api/Producto): Se obtiene la lista de los productos que se encuentran en la base de datos.
 
 ■ GET(/api/Producto/{id}): Se obtiene el producto con el “id” indicado.
+
 ■ POST(/api/Producto): Se ingresa un nuevo producto a la base de datos.
+
 ■ PUT(/api/Producto/edit): Actualiza los datos de un producto.
 
 ■ POST(/api/Producto/Delete/{id}): Elimina el producto del id indicado.
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/74cfe730-9846-4dd4-bc76-4f8781f5f564/ee3b70e7-134f-4238-ad29-d09b19f64889/Untitled.png)
+![Untitled](./img/3.png)
 
 ## Configuración del middleware de autenticación para utilizar tokens JWT
 
@@ -30,29 +40,29 @@ En el proyecto la autenticación se debe realizar para ejecutar el método de el
 
 Para realizar esto se crea un modelo Usuario con los siguientes atributos:
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/74cfe730-9846-4dd4-bc76-4f8781f5f564/6c448511-37a8-4fa5-b60d-4c9bbe4270ce/Untitled.png)
+![Untitled](./img/4.png)
 
-Luego, se genera una lista de usuarios que tienen que iniciar sesión para acceder al método delete, sin embargo, solo el usuario con el rol de “administrador” puede ejecutar este método. 
+Luego, se genera una lista de usuarios que tienen que iniciar sesión para acceder al método delete, sin embargo, solo el usuario con el rol de “administrador” puede ejecutar este método.
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/74cfe730-9846-4dd4-bc76-4f8781f5f564/3154de07-e55e-416a-a722-59e23e5b8976/Untitled.png)
+![Untitled](./img/5.png)
 
 El proceso de autenticación y generación del token funciona de la siguiente manera. La clase “UsuarioController,” en la carpeta “Controllers,” define el método REST “Login” para realizar el proceso de inicar sesión dentro de la aplicación.
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/74cfe730-9846-4dd4-bc76-4f8781f5f564/101026fc-394a-4149-a6dc-59c31d6e77ee/Untitled.png)
+![Untitled](./img/6.png)
 
 Por ejemplo, vamos a iniciar sesión como “Juan” quien es “asesor.”
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/74cfe730-9846-4dd4-bc76-4f8781f5f564/26d7b572-87e2-44cb-876d-f2ed41b1480a/Untitled.png)
+![Untitled](./img/7.png)
 
 Nota: El body se debe enviar en formato JSON.
 
 La aplicación responde con la generación del token:
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/74cfe730-9846-4dd4-bc76-4f8781f5f564/ef04ffce-b897-487e-9394-1b62e637994b/Untitled.png)
+![Untitled](./img/8.png)
 
 Copiamos este Token y lo enviamos en el header de la solicitud del método de eliminar de la siguiente manera:
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/74cfe730-9846-4dd4-bc76-4f8781f5f564/22ccfbc7-1220-4a23-bddc-c78bfc3607ba/Untitled.png)
+![Untitled](./img/9.png)
 
 Primero, el url es: http://localhost:37469/api/Producto/Delete/3 y significa que vamos a eliminar el producto con el id 3. Luego en headers ingresamos en Key: Authorization y en Value: Bearer **token**.
 
@@ -60,21 +70,21 @@ Nota: Se debe ingresar la palabra “Bearer” y de ahí pegar el token, caso co
 
 La respuesta esta solicitud es la siguiente:
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/74cfe730-9846-4dd4-bc76-4f8781f5f564/8cb35013-2775-4734-a03d-7c5e3efffc4e/Untitled.png)
+![Untitled](./img/10.png)
 
 Esta respuesta es la esperada ya que iniciamos sesión como “asesor.” Ahora, si iniciamos sesión como administrador obtenemos la siguiente respuesta:
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/74cfe730-9846-4dd4-bc76-4f8781f5f564/66605647-2092-4bf6-ae1d-5efeab1f194a/Untitled.png)
+![Untitled](./img/11.png)
 
 Finalmente, dentro del controlador del método delete de productos se encuntra instrucción [Authorize], el cuál exige al usuario primero iniciar sesión para tener acceso a este método.
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/74cfe730-9846-4dd4-bc76-4f8781f5f564/cee469e5-ed70-454f-a016-da4aec28ae87/Untitled.png)
+![Untitled](./img/12.png)
 
 # Seguridad y Middleware
 
 La aplicación tiene un registro de todos los errores dentro del programa y de las solicitudes a la API antes y después del procesamiento. Esta configuración está dentro de las carpeta “Middlewares” y “Extensions.” Particularmete la clase “ErrorHandlerMiddleware” dentro de la carpeta “Middlewares” se encarga de estas operaciones.
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/74cfe730-9846-4dd4-bc76-4f8781f5f564/1d87ee1d-8e86-4158-9441-1c08f87dd639/Untitled.png)
+![Untitled](./img/13.png)
 
 # Conclusiones
 
